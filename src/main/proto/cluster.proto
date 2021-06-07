@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package com.tencent.tdf.proto;
+option java_multiple_files = true;
+
+message Node {
+  string address = 1;
+  int32 port = 2;
+}
+
+message Setting {
+  string address = 1;
+}
+
+message ClusterContext {
+  repeated Node nodes = 1;
+  Setting settings = 2;
+  int64 timestamp = 3;
+}
+
+message BootstrapFlowRequest{
+  bytes data = 1;
+}
+
+message BootstrapFlowResponse{
+  bool success = 1;
+}
+
+message PipeRequest{
+  int64 flowId = 1;
+  int32 opIndex = 2;
+  bytes data = 3;
+}
+
+message PipeResponse{
+  bool success = 1;
+}
+
+enum  Event{
+
+  EXECUTOR_OP_START = 0;
+  EXECUTOR_OP_FINISHED = 1;
+  GLOBAL_OP_FINISHED = 2;
+}
+
+message FlowReportRequest{
+  Node node = 1;
+  int32 opIndex = 2;
+  Event event = 3;
+}
+
+message FlowReportResponse{
+  Event event = 1;
+  int32 maxFinishedOpIndex = 2;
+}
+
+service ExecutorRpcService {
+
+  rpc bootstrap(BootstrapFlowRequest) returns (BootstrapFlowResponse);
+
+  rpc process(PipeRequest) returns (PipeResponse);
+
+  rpc flowReport(FlowReportRequest) returns (FlowReportResponse);
+}
