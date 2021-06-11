@@ -9,4 +9,4 @@ CLASSPATH=${CONF_DIR}:`find ${basedir}/lib -name "*jar"|xargs -i echo {}:|xargs 
 
 JAVA_OPTS="-Dtimely.log.dir=${LOG_DIR} -Dtimely.log.file=timely.log -Dtimely.root.logger=INFO,RFA -Dtimely.security.logger=INFO,RFAS"
 
-exec nohup java -Dtimely_home=${basedir} ${JAVA_OPTS}  -cp $CLASSPATH com.tencent.tdf.cluster.NodeManager 1>${LOG_DIR}/timely.log.out 2>&1 &
+exec nohup java -Dtimely_home=${basedir} ${JAVA_OPTS}  -cp $CLASSPATH com.graph.flow.Main 1>${LOG_DIR}/timely.log.out 2>&1 &

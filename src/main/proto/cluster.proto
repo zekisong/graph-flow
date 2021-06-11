@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.tencent.tdf.proto;
+package com.graph.flow.proto;
 option java_multiple_files = true;
 
 message Node {
@@ -28,7 +28,7 @@ message BootstrapFlowResponse{
 
 message PipeRequest{
   int64 flowId = 1;
-  int32 opIndex = 2;
+  int32 index = 2;
   bytes data = 3;
 }
 
@@ -36,22 +36,14 @@ message PipeResponse{
   bool success = 1;
 }
 
-enum  Event{
-
-  EXECUTOR_OP_START = 0;
-  EXECUTOR_OP_FINISHED = 1;
-  GLOBAL_OP_FINISHED = 2;
-}
-
 message FlowReportRequest{
   Node node = 1;
-  int32 opIndex = 2;
-  Event event = 3;
+  repeated int64 receives = 2;
+  repeated int64 sends = 3;
 }
 
 message FlowReportResponse{
-  Event event = 1;
-  int32 maxFinishedOpIndex = 2;
+  bool finished = 1;
 }
 
 service ExecutorRpcService {
